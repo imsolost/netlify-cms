@@ -374,7 +374,6 @@ export default class API {
   async editorialWorkflowGit(fileTree, entry, filesList, options) {
     const contentKey = (entry && entry.slug) || options.slug;
     const branchName = this.generateBranchName(contentKey);
-    const unpublished = options.unpublished || false;
 
     const metadata = await this.retrieveMetadata(contentKey);
     const unpublished = options.unpublished || (metadata && !!metadata.isMediaOnlyPR) || false; // Check if the meta is from a media only PR
