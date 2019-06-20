@@ -334,8 +334,14 @@ export default class API {
     return Promise.all(uploadPromises).then(() => {
       if (!options.useWorkflow) {
         return this.getBranch()
-          .then(branchData => this.updateTree(branchData.commit.sha, '/', fileTree))
-          .then(changeTree => this.commit(options.commitMessage, changeTree))
+          .then(branchData => {
+            console.log('here1 - branchData', branchData, fileTree)
+            return this.updateTree(branchData.commit.sha, '/', fileTree)
+          })
+          .then(changeTree => {
+            console.log('here2 - changeTree', changeTree)
+            return this.commit(options.commitMessage, changeTree)
+          })
           .then(response => this.patchBranch(this.branch, response.sha));
       } else {
         const mediaFilesList = mediaFiles.map(file => ({ path: file.path, sha: file.sha }));
